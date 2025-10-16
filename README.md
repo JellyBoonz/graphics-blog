@@ -195,13 +195,12 @@ Customize templates in `_layouts/`:
 2. **Enable GitHub Pages:**
    - Go to your repository settings
    - Navigate to "Pages" section
-   - Select "Deploy from a branch"
-   - Choose "main" branch and "/ (root)" folder
-   - Click "Save"
+   - Select "GitHub Actions" as the source
+   - The GitHub Actions workflow will automatically deploy your site
 
 3. **Wait for deployment:**
    - GitHub Pages will build and deploy your site
-   - Access it at `https://yourusername.github.io/graphics-blog`
+   - Access it at `https://jellyboonz.github.io/graphics-blog`
 
 ### Custom Domain (Optional)
 

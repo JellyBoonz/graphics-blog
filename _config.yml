@@ -3,7 +3,7 @@ title: "Jelly Renders"
 description: "A blog documenting my journey through graphics programming, rendering, and related math."
 author: "Jaiden Ortiz aka JellyBoonz"
 email: "zitropiano@gmail.com"
-url: "https://JellyBoonz.github.io"
+url: "https://jellyboonz.github.io"
 baseurl: "/graphics-blog"
 
 # Build settings
@@ -34,6 +34,7 @@ plugins:
   - jekyll-feed
   - jekyll-sitemap
   - jekyll-seo-tag
+  - jekyll-paginate
 
 # Exclude from processing
 exclude:

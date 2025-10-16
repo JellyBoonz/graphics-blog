@@ -3,14 +3,6 @@ source "https://rubygems.org"
 # GitHub Pages compatible setup
 gem "github-pages", group: :jekyll_plugins
 
-# Local development gems
-group :jekyll_plugins do
-  gem "jekyll-feed", "~> 0.12"
-  gem "jekyll-sitemap"
-  gem "jekyll-seo-tag", "~> 2.6"
-  gem "jekyll-paginate", "~> 1.1"
-end
-
 # Windows and JRuby does not include zoneinfo files, so bundle the tzinfo-data gem
 platforms :mingw, :x64_mingw, :mswin, :jruby do
   gem "tzinfo", ">= 1", "< 3"
