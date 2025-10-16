@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% seo %}
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+
+    <!-- MathJax for mathematical notation -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Feed -->
+    {% feed_meta %}
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ '/assets/favicon.ico' | relative_url }}">
+</head>
+
+<body>
+    <div class="container">
+        <header class="site-header">
+            <h1 class="site-title">
+                <a href="{{ '/' | relative_url }}">{{ site.title | escape }}</a>
+            </h1>
+            {% if site.description %}
+            <p class="site-description">{{ site.description }}</p>
+            {% endif %}
+
+            <nav class="site-nav">
+                <ul class="nav-list">
+                    {% for item in site.navigation %}
+                    <li>
+                        <a href="{{ item.url | relative_url }}" {% if page.url==item.url %}class="current" {% endif %}>
+                            {{ item.title }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            {{ content }}
+        </main>
+
+        <footer class="site-footer">
+            <p>
+                &copy; {{ site.time | date: '%Y' }} {{ site.author }}.
+                Powered by <a href="https://jekyllrb.com/">Jekyll</a> and
+                <a href="https://pages.github.com/">GitHub Pages</a>.
+            </p>
+            {% if site.social %}
+            <p>
+                {% if site.social.github %}
+                <a href="https://github.com/{{ site.social.github }}">GitHub</a>
+                {% endif %}
+                {% if site.social.twitter %}
+                <a href="https://twitter.com/{{ site.social.twitter }}">Twitter</a>
+                {% endif %}
+                {% if site.social.linkedin %}
+                <a href="https://linkedin.com/in/{{ site.social.linkedin }}">LinkedIn</a>
+                {% endif %}
+            </p>
+            {% endif %}
+        </footer>
+    </div>
+</body>
+
+</html>

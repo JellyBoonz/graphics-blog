@@ -1,0 +1,68 @@
+# Site settings
+title: "Jelly Renders"
+description: "A blog documenting my journey through graphics programming, rendering, and related math."
+author: "Jaiden Ortiz aka JellyBoonz"
+email: "zitropiano@gmail.com"
+url: "https://JellyBoonz.github.io"
+baseurl: "/graphics-blog"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: /:categories/:year/:month/:day/:title/
+
+# Collections
+collections:
+  posts:
+    output: true
+    permalink: /:categories/:year/:month/:day/:title/
+
+# Default settings
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+  - scope:
+      path: ""
+    values:
+      layout: "default"
+
+# Plugins (GitHub Pages compatible)
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor/
+
+# MathJax configuration
+kramdown:
+  math_engine: mathjax
+  math_engine_opts:
+    preview: true
+    preview_as_code: true
+
+# Social links (optional)
+social:
+  github: JellyBoonz
+  twitter: JellyBoonz
+
+# Navigation
+navigation:
+  - title: Home
+    url: /
+  - title: About
+    url: /about/
+  - title: Archive
+    url: /archive/
+
+# Pagination
+paginate: 5
+paginate_path: "/page:num/"
