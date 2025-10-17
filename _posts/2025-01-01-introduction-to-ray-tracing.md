@@ -6,7 +6,7 @@ categories: [Graphics, Ray Tracing]
 tags: [ray-tracing, rendering, mathematics, computer-graphics]
 author: "Jaiden Ortiz aka JellyBoonz"
 ---
-## ****What is Ray Tracing?
+## What is Ray Tracing?
 
 Ray tracing is a rendering technique that simulates the path of light as it bounces around a scene. As opposed to rasterization, which projects 3D objects onto a 2D screen, ray tracing follows individual rays of light to create photorealistic images with accurate reflections, refractions, and shadows. For a good intro to ray tracing, I'd recommend you read through the Basic Raytracing chapter in Gabriel Gambetta's [book](https://gabrielgambetta.com/computer-graphics-from-scratch/02-basic-raytracing.html) Computer Graphics from Scratch. Instead of diving too deep into the nitty gritty implementation details, I thought it might be helpful to give an intuitive explanation for *why* ray tracing is such a useful tool for rendering realistic images on the screen.
 
