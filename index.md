@@ -8,7 +8,7 @@ title: "Jelly Renders"
 A blog documenting my journey through graphics programming, rendering, and related mathematics. Here you'll find explorations of computer graphics algorithms, mathematical concepts, and practical implementations.
 
 ## Recent Posts
-
+---
 {% for post in site.posts limit:5 %}
   <article class="post-list-item">
     <h2 class="post-list-title">
