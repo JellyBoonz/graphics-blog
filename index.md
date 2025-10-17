@@ -34,7 +34,6 @@ A blog documenting my journey through graphics programming, rendering, and relat
   </article>
 {% endfor %}
 
----
 
 *"The best way to understand a rendering algorithm is to implement it yourself."*
 
