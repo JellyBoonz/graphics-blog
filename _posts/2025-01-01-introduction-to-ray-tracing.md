@@ -16,7 +16,7 @@ Imagine you're standing in a room with a single light bulb hanging from the ceil
 
 For decades, computer graphics struggled to capture this dance of light. Early renderers could only paint flat polygons with simple shading. Think of the blocky, angular worlds of 1980s video games (Similar to Figure 1), where surfaces looked like they were made of flat material. Even as graphics improved with techniques like Gouraud and Phong shading, the results still felt artificial. Objects had highlights and shadows, but they existed in isolation, as if each surface was lit independently of everything else around it.
 
-![Early computer graphics from Tron (1982) showing flat, stylized rendering without ray tracing](/assets/images/tron-early-graphics.jpg)
+![Early computer graphics from Tron (1982) showing flat, stylized rendering without ray tracing](/graphics-blog/assets/images/tron-early-graphics.jpg)
 
 *Figure 1: The iconic Light Cycles from Tron (1982) showcase the flat, stylized aesthetic of early computer graphics—objects glow rather than being illuminated by realistic light sources*
 
@@ -24,7 +24,7 @@ The breakthrough came when computer scientists realized they were approaching th
 
 Though the mathematics for tracing rays of light goes back centuries, the earliest *computational* version of ray tracing was introduced by Arthur Appel in his 1968 paper "*Some Techniques for Shading Machine Renderings of Solids*". A little over 10 years later in 1979 Turner Whitted discovered the modern form of recursive ray tracing, illustrated in his paper *An Improved Illumination Model for Shaded Display*. Quite a departure from the earlier renders, this new technique broke new ground for those who sought to simulate realistic lighting through computation.
 
-![Image of Ray Traced Spheres](/assets/images/Recursive_raytrace_of_a_sphere.png)
+![Image of Ray Traced Spheres](/graphics-blog/assets/images/Recursive_raytrace_of_a_sphere.png)
 
 *Figure 2: Ray Traced Sphere example. Image credit: [Wikipedia - Ray tracing (graphics)](https://en.wikipedia.org/wiki/Ray_tracing_%28graphics%29)*
 
@@ -120,7 +120,7 @@ This recursive approach is integral (no. Not *that* integral) for creating reali
 
 Of course, this elegance comes at a cost. Following every possible path of light through a complex scene is computationally expensive. Each pixel may require hundreds or thousands of ray calculations, and each ray might spawn multiple child rays through reflections and refractions.
 
-![A ray-traced interior scene showing realistic lighting, reflections, and shadows](/assets/images/ray_traced_room.png)
+![A ray-traced interior scene showing realistic lighting, reflections, and shadows](/graphics-blog/assets/images/ray_traced_room.png)
 *Figure 3: A modern ray-traced scene demonstrating the photorealistic results achievable despite computational complexity. Image credit: [NVIDIA Developer Blog](https://developer.nvidia.com/blog/wp-content/uploads/2018/06/ray_traced_room.png)*
 
 But this computational challenge has led to some pretty remarkable algorithms in computer graphics. Spatial data structures like bounding volume hierarchies help us quickly determine which objects a ray might intersect. Importance sampling techniques help us focus computational resources on the most visually significant light paths. And modern hardware acceleration makes real-time ray tracing possible for the first time in history.
