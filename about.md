@@ -19,7 +19,7 @@ Computer graphics sits at the intersection of mathematics, computer science, and
 - **Innovation thrives**: New algorithms and techniques are constantly being developed
 
 The journey from understanding a mathematical concept to seeing it rendered on screen is incredibly rewarding (as well as challenging). This blog documents that journey.
-It's fun and hopefully this blog serves as way for you to try it.
+Computer graphics is a fun and deep field. My hope is that this blog may serve as inspiration for you to try it yourself.
 
 ## About me
 

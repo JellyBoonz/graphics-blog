@@ -34,26 +34,8 @@ A blog documenting my journey through graphics programming, rendering, and relat
   </article>
 {% endfor %}
 
-## Categories
-
-{% assign categories = site.posts | map: 'categories' | flatten | uniq | sort %}
-<ul>
-  {% for category in categories %}
-    <li><a href="{{ '/category/' | append: category | relative_url }}">{{ category }}</a></li>
-  {% endfor %}
-</ul>
-
-## About This Blog
-
-This blog explores the fascinating intersection of mathematics, computer science, and visual art. Topics include:
-
-- **Ray Tracing**: From basic algorithms to advanced techniques
-- **Mathematical Foundations**: Linear algebra, calculus, and geometry in graphics
-- **Rendering Techniques**: Rasterization, global illumination, and real-time graphics
-- **Implementation Details**: Code examples and performance considerations
-
-Whether you're a student learning computer graphics, a developer working on rendering engines, or simply curious about how digital images are created, there's something here for you.
-
 ---
 
 *"The best way to understand a rendering algorithm is to implement it yourself."*
+
+[Read more about this blog →](/about/)
