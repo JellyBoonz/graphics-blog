@@ -149,7 +149,7 @@ blockquote {
 
 /* Code blocks */
 pre {
-  background-color: #1B1F3B;
+  background-color: #2A3B4F;
   border: 1px solid #00c49a;
   border-radius: 6px;
   padding: 1rem;
@@ -161,7 +161,7 @@ pre {
 }
 
 code {
-  background-color: #1B1F3B;
+  background-color: #2A3B4F;
   border: 1px solid #00c49a;
   border-radius: 3px;
   padding: 0.2rem 0.4rem;
@@ -178,7 +178,7 @@ pre code {
 
 /* Syntax highlighting */
 .highlight {
-  background-color: #1B1F3B;
+  background-color: #2A3B4F;
   border: 1px solid #00c49a;
   border-radius: 6px;
   margin: 1.5rem 0;
