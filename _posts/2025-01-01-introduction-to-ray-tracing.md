@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "So what even is Ray Tracing? An intuitive look."
-date: 2025-10-20 10:00:00 -0000
+date: 2025-10-17 10:00:00 -0000
 categories: [Graphics, Ray Tracing]
 tags: [ray-tracing, rendering, mathematics, computer-graphics]
 author: "Jaiden Ortiz aka JellyBoonz"
