@@ -35,6 +35,6 @@ A blog documenting my journey through graphics programming, rendering, and relat
 {% endfor %}
 
 
-*"The best way to understand a rendering algorithm is to implement it yourself."*
+*“May you live every day of your life.”  -- Johnathan Swift*
 
 [Read more about this blog →](/graphics-blog/about/)
