@@ -202,6 +202,16 @@ mjx-container[jax="SVG"] {
   margin: 1.5rem 0;
 }
 
+/* Ensure proper rendering of absolute value and other symbols */
+mjx-math {
+  font-size: inherit !important;
+}
+
+/* Fix for pipe symbols in LaTeX */
+mjx-math mjx-mo {
+  font-family: "Times New Roman", "Times", serif !important;
+}
+
 /* Images */
 img {
   max-width: 100%;
