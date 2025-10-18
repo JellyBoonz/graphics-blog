@@ -70,7 +70,7 @@ $$
 
 $$
 
-We can think of \\(|\mathbf{P} - \mathbf{C}|\\) as another ray, whose squared distance is equal to the squared radius of the sphere.
+We can think of $\|\mathbf{P} - \mathbf{C}\|$ as another ray, whose squared distance is equal to the squared radius of the sphere.
 
 Now, here's where the magic happens. We want to find the point on our ray that also lies on the sphere's surface. In other words, we want to find the value of $t$ (*remember:* the distance that the ball has traveled along the string) where the point $\mathbf{P}(t) = \mathbf{O} + t\mathbf{D}$ satisfies the sphere equation. We want to find where the point along the ray meets the point along the sphere. If the both meet, then the points are the exact same! Given that, we can substitute our ray equation into the sphere equation:
 
@@ -92,9 +92,9 @@ With a bit of algebraic manipulation, this becomes a quadratic equation—the sa
 >
 > Where for our ray-sphere intersection:
 >
-> - \\(a = |\mathbf{D}|^2\\) (usually 1 if the ray direction is normalized)
-> - \\(b = 2(\mathbf{L} \cdot \mathbf{D})\\) where \\(\mathbf{L} = \mathbf{O} - \mathbf{C}\\)
-> - \\(c = |\mathbf{L}|^2 - r^2\\)
+> - $a = \|\mathbf{D}\|^2$ (usually 1 if the ray direction is normalized)
+> - $b = 2(\mathbf{L} \cdot \mathbf{D})$ where $\mathbf{L} = \mathbf{O} - \mathbf{C}$
+> - $c = \|\mathbf{L}\|^2 - r^2$
 
 What's beautiful about this is that the mathematics directly corresponds to our visual intuition. The quadratic equation isn't just a mathematical trick—it's the natural language for describing how rays interact with spheres.
 
