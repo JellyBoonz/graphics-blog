@@ -3,8 +3,8 @@ title: "Jelly Renders"
 description: "A blog documenting my journey through graphics programming, rendering, and related math."
 author: "Jaiden Ortiz aka JellyBoonz"
 email: "zitropiano@gmail.com"
-url: "https://jellyboonz.github.io"
-baseurl: "/graphics-blog"
+url: "https://jellyrenders.com"
+baseurl: ""
 
 # Build settings
 markdown: kramdown
