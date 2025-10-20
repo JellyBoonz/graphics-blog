@@ -33,7 +33,7 @@ jobs:
 
             - name: Build with Jekyll
               run: |
-                  bundle exec jekyll build --baseurl "/graphics-blog"
+                  bundle exec jekyll build
               env:
                   JEKYLL_ENV: production
 
