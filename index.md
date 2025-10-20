@@ -37,4 +37,4 @@ A blog documenting my journey through graphics programming, rendering, and relat
 
 *“May you live every day of your life.”  -- Johnathan Swift*
 
-[Read more about this blog →](/graphics-blog/about/)
+[Read more about this blog →]({{ '/about/' | relative_url }})
