@@ -119,7 +119,10 @@ function iridescent_color(view_direction, surface_normal, base_color, strength, 
 This algorithm captures the essence of iridescence: the angle-dependent phase relationships between different color frequencies, modeled through simple cosine functions. The result is a smooth, realistic color gradient that shifts as you move around the object, just like real iridescent materials.
 
 ## Result
-
+Implementing this into my ray tracer, I get the following:
 <img src="{{ '/assets/images/iridescence/rendered_bubble.png' | relative_url }}" alt="Rendered Bubble" style="max-width: 80%; height: auto; display: block; margin: 1.5rem auto;">
 
+
 *Figure 3*
+
+Not bad. Hope you learned something!
