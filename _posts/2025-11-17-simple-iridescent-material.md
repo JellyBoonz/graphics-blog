@@ -25,11 +25,11 @@ Next, we want a way to map this angle to an output in the form of color. Lets fi
 
 The reason we get a different mix comes down to wave interference. Red light has the longest wavelength, green has a medium wavelength, and blue has the shortest wavelength. When light reflects off the surface at different viewing angles, the path length differences cause the RGB waves to shift out of phase with each other. Sometimes these waves constructively interfere (amplifying each other), and sometimes they destructively interfere (canceling each other out). This phase-dependent interference is what creates the shifting color gradient we see as we move an iridescent object around.
 
-<img src="{{ '/assets/images/iridescence/frequencies.jpeg' | relative_url }}" alt="Different Frequencies for R, G, B values" style="max-width: 80%; height: auto; display: block; margin: 1.5rem auto;">
+<img src="{{ '/assets/images/iridescence/frequency_drawing.jpg' | relative_url }}" alt="Different Frequencies for R, G, B values" style="max-width: 80%; height: auto; display: block; margin: 1.5rem auto;">
 
 *Figure 1*
 
-For example, note the different viewing angles in Figure 1. At each viewing angle $\theta$, the path length that light travels changes, which shifts where we sample each RGB wave in its cycle. This means that at viewing angle $\theta_1$, we might sample $\mathbf{F}_r$ and $\mathbf{F}_g$ at points where their peaks align (constructive interference), creating a bright red-green mix, while $\mathbf{F}_b$ might be sampled at its trough, contributing less to the final color. At a different viewing angle $\theta_2$, the phase relationships change: now $\mathbf{F}_r$ and $\mathbf{F}_g$ might be out of phase (destructive interference), dampening their contribution, while $\mathbf{F}_b$ could be at its peak, making blue more prominent. This phase-dependent sampling is what creates the smooth color gradient as we change our viewing angle.
+For example, note the different viewing angles in Figure 1. At each viewing angle $\theta$, the path length that light travels changes, which shifts where we sample each RGB wave in its cycle. This means that at viewing angle $\theta_1$, we might sample all RGB waves at points where their peaks align (constructive interference), creating a bright red-green-blue mix. At a different viewing angle $\theta_2$, the phase relationships change: now $\mathbf{F}_g$ and $\mathbf{F}_b$ might be out of phase (destructive interference), dampening their contribution, while $\mathbf{F}_r$ could be at its peak, making red more prominent. This phase-dependent sampling is what creates the smooth color gradient as we change our viewing angle.
 
 ### Mapping Angle to Phase
 
