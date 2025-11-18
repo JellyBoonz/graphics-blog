@@ -25,7 +25,7 @@ Next, we want a way to map this angle to an output in the form of color. Lets fi
 
 The reason we get a different mix comes down to wave interference. Red light has the longest wavelength, green has a medium wavelength, and blue has the shortest wavelength. When light reflects off the surface at different viewing angles, the path length differences cause the RGB waves to shift out of phase with each other. Sometimes these waves constructively interfere (amplifying each other), and sometimes they destructively interfere (canceling each other out). This phase-dependent interference is what creates the shifting color gradient we see as we move an iridescent object around.
 
-<img src="{{ '/assets/images/iridescence/frequencies_drawing.png' | relative_url }}" alt="Different Frequencies for R, G, B values" style="max-width: 80%; height: auto; display: block; margin: 1.5rem auto;">
+<img src="{{ '/assets/images/iridescence/frequencies.jpeg' | relative_url }}" alt="Different Frequencies for R, G, B values" style="max-width: 80%; height: auto; display: block; margin: 1.5rem auto;">
 
 *Figure 1*
 
@@ -81,7 +81,7 @@ Because each channel uses a different frequency multiplier, they'll peak and tro
 
 In practice, iridescent materials often have a base color or material underneath. For example, a soap bubble has a transparent base, while an iridescent paint might have an underlying color. We can blend the iridescent effect with a base material using a strength parameter:
 
-$$\text{final\_color} = (1 - \text{strength}) \cdot \text{base\_color} + \text{strength} \cdot \text{iridescent\_color}$$
+$$\text{final color} = (1 - \text{strength}) \cdot \text{base color} + \text{strength} \cdot \text{iridescent color}$$
 
 When $\text{strength} = 0$, we get only the base material. When $\text{strength} = 1$, we get only the iridescent effect. Values in between create a subtle blend, which is often more realistic for many materials.
 
