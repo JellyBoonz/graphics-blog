@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Rendering a Simple Iridescent Material"
-date: 2025-10-17 10:00:00 -0000
+date: 2025-11-17 10:00:00 -0000
 categories: [Graphics, Ray Tracing]
 tags: [ray-tracing, rendering, mathematics, computer-graphics]
 author: "Jaiden Ortiz aka JellyBoonz"
