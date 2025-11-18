@@ -6,7 +6,7 @@ categories: [Graphics, Ray Tracing]
 tags: [ray-tracing, rendering, mathematics, computer-graphics]
 author: "Jaiden Ortiz aka JellyBoonz"
 ---
-## Iridescence
+## A Simple Iridescence Algorithm
 
 There are many examples of iridescent materials in the real world. Bubbles, oil in water, bismuth. What gives them their colorful complexion? It turns out the physical phenomena at play is pretty complicated ([For those who want to do a deep dive](https://hal.science/hal-01518344/document)). For the sake of simplicity, what we see is a mixture of different color frequencies, where that mixture changes depending on the angle we are viewing the object from. Thankfully, there are simpler methods to approximate this behavior. I'm gonna go over the one I'm using in my Ray Tracer here.
 
