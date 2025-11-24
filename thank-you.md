@@ -4,7 +4,7 @@ title: "Thank You!"
 permalink: /thank-you/
 ---
 
-# Thank You for Subscribing! 🎉
+# Thank You for Subscribing!
 
 You've successfully subscribed to **Jelly Renders**. I'm excited to have you along for the journey!
 
@@ -21,6 +21,7 @@ You'll receive email notifications whenever I publish new content about:
 While you wait for the next post, feel free to:
 - Check out my [GitHub](https://github.com/JellyBoonz) for code examples
 - Follow along on [Twitter](https://twitter.com/JellyBoonz) for updates
+- Connect with me on [LinkedIn](https://Linkedin.com/in/jaiden-ortiz)
 
 ## Questions or Feedback?
 
