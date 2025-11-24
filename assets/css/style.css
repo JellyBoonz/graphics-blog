@@ -37,6 +37,29 @@ body {
   text-decoration: none;
 }
 
+.site-title-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.2s ease;
+}
+
+.site-title-link:hover {
+  opacity: 0.8;
+}
+
+.site-logo {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+.site-title-text {
+  color: #B19CFF;
+}
+
 .site-description {
   color: #A0A1AB;
   font-size: 1.1rem;
@@ -316,6 +339,11 @@ img {
     font-size: 1.75rem;
   }
   
+  .site-logo {
+    width: 40px;
+    height: 40px;
+  }
+  
   .post-title {
     font-size: 2rem;
   }
@@ -337,6 +365,11 @@ img {
   
   .site-title {
     font-size: 1.5rem;
+  }
+  
+  .site-logo {
+    width: 32px;
+    height: 32px;
   }
   
   .post-title {
