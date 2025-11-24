@@ -3,46 +3,49 @@
 
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Jelly Renders - Preview</title>
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
+
     <!-- MathJax for mathematical notation -->
-    <script type="text/x-mathjax-config">
-        MathJax.Hub.Config({
-            tex2jax: {
-                inlineMath: [['$','$'], ['\\(','\\)']],
-                displayMath: [['$$','$$'], ['\\[','\\]']],
-                processEscapes: true,
-                processEnvironments: true
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: false,
+                processEnvironments: true,
+                packages: { '[+]': ['ams', 'newcommand', 'configmacros'] }
             },
-            "HTML-CSS": {
-                availableFonts: ["TeX"],
-                preferredFont: "TeX",
-                webFonts: ["TeX"]
-            },
-            CommonHTML: {
-                linebreaks: { automatic: true }
-            },
-            tex2jax: {
-                inlineMath: [["$", "$"], ["\\(", "\\)"]],
-                displayMath: [["$$", "$$"], ["\\[", "\\]"]],
-                processEscapes: true,
-                processEnvironments: true
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
             }
-        });
+        };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- GoatCounter Analytics -->
+    <script data-goatcounter="https://jellyboonz.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 
 <body>
     <div class="container">
         <header class="site-header">
             <h1 class="site-title">
-                <a href="{{ '/' | relative_url }}">Jelly Renders</a>
+                <a href="/" class="site-title-link">
+                    <img src="assets/images/logo.svg" alt="Jelly Renders" class="site-logo" />
+                    <span class="site-title-text">Jelly Renders</span>
+                </a>
             </h1>
             <p class="site-description">A blog documenting my journey through graphics programming, rendering, and
                 related math.</p>
@@ -50,145 +53,73 @@
             <nav class="site-nav">
                 <ul class="nav-list">
                     <li><a href="/">Home</a></li>
-                    <li><a href="{{ '/about/' | relative_url }}">About</a></li>
+                    <li><a href="/about/">About</a></li>
                     <li><a href="/archive/">Archive</a></li>
                 </ul>
+                <div class="subscribe-section">
+                    <button type="button" class="subscribe-button" id="subscribe-toggle">Subscribe by Email</button>
+                    <form action="https://buttondown.com/api/emails/embed-subscribe/jaiden" method="post"
+                        class="embeddable-buttondown-form subscribe-form" id="subscribe-form" style="display: none;">
+                        <label for="bd-email">Enter your email</label>
+                        <input type="email" name="email" id="bd-email" required />
+                        <input type="submit" value="Subscribe" />
+                        <p class="buttondown-attribution">
+                            <a href="https://buttondown.com/refer/jaiden" target="_blank">Powered by Buttondown.</a>
+                        </p>
+                    </form>
+                </div>
             </nav>
         </header>
 
         <main class="main-content">
-            <article class="post">
-                <header class="post-header">
-                    <h1 class="post-title">Introduction to Ray Tracing</h1>
+            <h1>Welcome to Jelly Renders</h1>
 
-                    <div class="post-meta">
-                        <time datetime="2025-01-01">January 01, 2025</time>
-                        • <span class="author">Jaiden Ortiz aka JellyBoonz</span>
-                        • <span class="categories">
-                            <a href="/category/Graphics">Graphics</a>, <a href="/category/Ray Tracing">Ray Tracing</a>
-                        </span>
-                        <br>
-                        <span class="tags">
-                            <span class="tag">#ray-tracing</span> <span class="tag">#rendering</span> <span
-                                class="tag">#mathematics</span> <span class="tag">#computer-graphics</span>
-                        </span>
-                    </div>
-                </header>
+            <p>A blog documenting my journey through graphics programming, rendering, and related mathematics. Here
+                you'll
+                find explorations of computer graphics algorithms, mathematical concepts, and practical
+                implementations.</p>
 
-                <div class="post-content">
-                    <p>Ray tracing is a rendering technique that simulates the path of light as it bounces around a
-                        scene. Unlike rasterization, which projects 3D objects onto a 2D screen, ray tracing follows
-                        individual rays of light to create photorealistic images with accurate reflections, refractions,
-                        and shadows.</p>
+            <h2>Recent Posts</h2>
 
-                    <h2>The Basic Algorithm</h2>
-                    <p>At its core, ray tracing follows a simple principle: for each pixel on the screen, cast a ray
-                        from the camera through that pixel into the scene, and see what it hits.</p>
+            <article class="post-list-item">
+                <h2 class="post-list-title">
+                    <a href="/graphics/2025/11/17/simple-iridescent-material/">Rendering a Simple Iridescent
+                        Material</a>
+                </h2>
 
-                    <h3>Ray-Sphere Intersection</h3>
-                    <p>One of the fundamental operations in ray tracing is determining if a ray intersects with a
-                        sphere. Given a ray with origin $\mathbf{O}$ and direction $\mathbf{D}$, and a sphere with
-                        center $\mathbf{C}$ and radius $r$, we can solve for the intersection using the quadratic
-                        formula.</p>
-
-                    <p>The ray equation is:</p>
-                    <p>$$\mathbf{P}(t) = \mathbf{O} + t\mathbf{D}$$</p>
-
-                    <p>For a sphere, we need to find where:</p>
-                    <p>$$|\mathbf{P}(t) - \mathbf{C}|^2 = r^2$$</p>
-
-                    <h2>Implementation Example</h2>
-                    <p>Here's a simple C++ implementation of ray-sphere intersection:</p>
-
-                    <pre><code>struct Ray {
-    Vec3 origin;
-    Vec3 direction;
-    
-    Ray(const Vec3& o, const Vec3& d) : origin(o), direction(d) {}
-    
-    Vec3 at(float t) const {
-        return origin + t * direction;
-    }
-};
-
-struct Sphere {
-    Vec3 center;
-    float radius;
-    
-    Sphere(const Vec3& c, float r) : center(c), radius(r) {}
-};
-
-bool intersect(const Ray& ray, const Sphere& sphere, float& t) {
-    Vec3 L = ray.origin - sphere.center;
-    float a = dot(ray.direction, ray.direction);
-    float b = 2.0f * dot(L, ray.direction);
-    float c = dot(L, L) - sphere.radius * sphere.radius;
-    
-    float discriminant = b * b - 4 * a * c;
-    
-    if (discriminant < 0) {
-        return false;
-    }
-    
-    float t1 = (-b - sqrt(discriminant)) / (2 * a);
-    float t2 = (-b + sqrt(discriminant)) / (2 * a);
-    
-    if (t1 > 0) {
-        t = t1;
-        return true;
-    } else if (t2 > 0) {
-        t = t2;
-        return true;
-    }
-    
-    return false;
-}</code></pre>
-
-                    <blockquote>
-                        "The best way to understand a rendering algorithm is to implement it yourself."
-                    </blockquote>
-
-                    <h2>Surface Normals and Lighting</h2>
-                    <p>Once we find an intersection, we need to calculate the surface normal for lighting calculations.
-                        For a sphere, the normal at any point on the surface is simply the vector from the sphere center
-                        to that point, normalized:</p>
-
-                    <pre><code>Vec3 calculateNormal(const Vec3& point, const Sphere& sphere) {
-    return normalize(point - sphere.center);
-}</code></pre>
-
-                    <h2>Basic Phong Lighting Model</h2>
-                    <p>The Phong lighting model combines three components:</p>
-
-                    <ol>
-                        <li><strong>Ambient</strong>: Constant lighting to simulate global illumination</li>
-                        <li><strong>Diffuse</strong>: Lambertian reflection based on the surface normal and light
-                            direction</li>
-                        <li><strong>Specular</strong>: Mirror-like reflection for shiny surfaces</li>
-                    </ol>
-
-                    <p>The combined lighting equation is:</p>
-                    <p>$$I = I_a k_a + I_d k_d (\mathbf{N} \cdot \mathbf{L}) + I_s k_s (\mathbf{R} \cdot \mathbf{V})^n$$
-                    </p>
-
-                    <p>Where:</p>
-                    <ul>
-                        <li>$I_a, I_d, I_s$ are ambient, diffuse, and specular light intensities</li>
-                        <li>$k_a, k_d, k_s$ are ambient, diffuse, and specular material coefficients</li>
-                        <li>$\mathbf{N}$ is the surface normal</li>
-                        <li>$\mathbf{L}$ is the light direction</li>
-                        <li>$\mathbf{R}$ is the reflection vector</li>
-                        <li>$\mathbf{V}$ is the view direction</li>
-                        <li>$n$ is the shininess exponent</li>
-                    </ul>
+                <div class="post-list-meta">
+                    <time datetime="2025-11-17">November 17, 2025</time>
+                    •
+                    <a href="/category/Graphics">Graphics</a>, <a href="/category/Ray Tracing">Ray Tracing</a>
                 </div>
+
+                <p class="post-excerpt">There are many examples of iridescent materials in the real world. Bubbles, oil
+                    in water, bismuth. What gives them their colorful complexion? It turns out the physical phenomena at
+                    play is pretty complicated. For the sake of simplicity, what we see is a mixture of different color
+                    frequencies, where that mixture changes depending on the angle we are viewing the object from.</p>
             </article>
 
-            <div class="pagination">
-                <a href="#" class="post-nav-prev">← Previous Post</a>
-                <span class="current">1</span>
-                <a href="#">Next Post →</a>
-            </div>
+            <article class="post-list-item">
+                <h2 class="post-list-title">
+                    <a href="/graphics/2025/10/17/introduction-to-ray-tracing/">So what even is Ray Tracing? An
+                        intuitive look.</a>
+                </h2>
+
+                <div class="post-list-meta">
+                    <time datetime="2025-10-17">October 17, 2025</time>
+                    •
+                    <a href="/category/Graphics">Graphics</a>, <a href="/category/Ray Tracing">Ray Tracing</a>
+                </div>
+
+                <p class="post-excerpt">Ray tracing is a rendering technique that simulates the path of light as it
+                    bounces around a scene. As opposed to rasterization, which projects 3D objects onto a 2D screen,
+                    ray tracing follows individual rays of light to create photorealistic images with accurate
+                    reflections, refractions, and shadows.</p>
+            </article>
+
+            <p><em>"May you live every day of your life." -- Johnathan Swift</em></p>
+
+            <p><a href="/about/">Read more about this blog →</a></p>
         </main>
 
         <footer class="site-footer">
@@ -200,10 +131,46 @@ bool intersect(const Ray& ray, const Sphere& sphere, float& t) {
             <p>
                 <a href="https://github.com/JellyBoonz">GitHub</a>
                 <a href="https://twitter.com/JellyBoonz">Twitter</a>
-                <a href="{{ '/about/' | relative_url }}">About</a>
             </p>
         </footer>
     </div>
+    <script>
+        (function () {
+            const form = document.getElementById('subscribe-form');
+            const button = document.getElementById('subscribe-toggle');
+            const subscribeSection = document.querySelector('.subscribe-section');
+
+            function toggleForm() {
+                if (form.style.display === 'none' || form.style.display === '') {
+                    form.style.display = 'block';
+                    button.textContent = 'Hide Form';
+                } else {
+                    form.style.display = 'none';
+                    button.textContent = 'Subscribe by Email';
+                }
+            }
+
+            function closeForm() {
+                form.style.display = 'none';
+                button.textContent = 'Subscribe by Email';
+            }
+
+            button.addEventListener('click', function (e) {
+                e.stopPropagation();
+                toggleForm();
+            });
+
+            subscribeSection.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
+
+            document.addEventListener('click', function (e) {
+                if (form.style.display === 'block') {
+                    closeForm();
+                }
+            });
+        })();
+    </script>
 </body>
 
 </html>

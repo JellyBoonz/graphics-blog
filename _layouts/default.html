@@ -69,6 +69,18 @@
                     </li>
                     {% endfor %}
                 </ul>
+                <div class="subscribe-section">
+                    <button type="button" class="subscribe-button" id="subscribe-toggle">Subscribe by Email</button>
+                    <form action="https://buttondown.com/api/emails/embed-subscribe/jaiden" method="post"
+                        class="embeddable-buttondown-form subscribe-form" id="subscribe-form" style="display: none;">
+                        <label for="bd-email">Enter your email</label>
+                        <input type="email" name="email" id="bd-email" required />
+                        <input type="submit" value="Subscribe" />
+                        <p class="buttondown-attribution">
+                            <a href="https://buttondown.com/refer/jaiden" target="_blank">Powered by Buttondown.</a>
+                        </p>
+                    </form>
+                </div>
             </nav>
         </header>
 
@@ -97,6 +109,43 @@
             {% endif %}
         </footer>
     </div>
+    <script>
+        (function () {
+            const form = document.getElementById('subscribe-form');
+            const button = document.getElementById('subscribe-toggle');
+            const subscribeSection = document.querySelector('.subscribe-section');
+
+            function toggleForm() {
+                if (form.style.display === 'none' || form.style.display === '') {
+                    form.style.display = 'block';
+                    button.textContent = 'Hide Form';
+                } else {
+                    form.style.display = 'none';
+                    button.textContent = 'Subscribe by Email';
+                }
+            }
+
+            function closeForm() {
+                form.style.display = 'none';
+                button.textContent = 'Subscribe by Email';
+            }
+
+            button.addEventListener('click', function (e) {
+                e.stopPropagation();
+                toggleForm();
+            });
+
+            subscribeSection.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
+
+            document.addEventListener('click', function (e) {
+                if (form.style.display === 'block') {
+                    closeForm();
+                }
+            });
+        })();
+    </script>
 </body>
 
 </html>
