@@ -51,8 +51,8 @@ body {
 }
 
 .site-logo {
-  width: 48px;
-  height: 48px;
+  width: 72px;
+  height: 72px;
   flex-shrink: 0;
 }
 
@@ -340,8 +340,8 @@ img {
   }
   
   .site-logo {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
   }
   
   .post-title {
@@ -368,8 +368,8 @@ img {
   }
   
   .site-logo {
-    width: 32px;
-    height: 32px;
+    width: 48px;
+    height: 48px;
   }
   
   .post-title {
