@@ -2,7 +2,7 @@
 layout: post
 title: "2D Signed Distance Fields"
 date: 2025-12-01 10:00:00 -0000
-tags: [ray-tracing, rendering, mathematics, computer-graphics]
+tags: [rendering, mathematics, computer-graphics]
 author: "Jaiden Ortiz aka JellyBoonz"
 ---
 ## Introduction
@@ -96,5 +96,7 @@ The `k` parameter controls the smoothness of the blend—larger values create wi
 When putting it all together (ignoring a bunch of WebGPU pipeline setup) I got the following result:
 
 ![Final rendered result](/assets/images/sdf/final-rendered-result.png)
+
+Full GitHub repo [here.](https://github.com/JellyBoonz/webgpu-SDL)
 
 As always, I hope you find this information useful or interesting. If you'd like to keep up on the latest, consider subscribing. Until next time!
