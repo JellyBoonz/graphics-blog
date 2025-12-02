@@ -63,6 +63,47 @@ fn sdBox(p: vec2<f32>, c: vec2<f32>, size: f32) -> f32 {
 }
 ```
 
+### How the Square SDF Works
+
+The square SDF is more complex than the circle because we need to handle different regions: inside the box, outside the box (in different quadrants), and on the edges. Let's break down each step:
+
+**Step 1: Transform to box-local space**
+```wgsl
+abs(p - c)
+```
+First, we translate the point `p` relative to the box center `c`, then take the absolute value. This effectively moves the point into the first quadrant (top-right), which simplifies our calculations since a box is symmetric.
+
+**Step 2: Compute distance to box edges**
+```wgsl
+let d = abs(p - c) - vec2<f32>(size, size);
+```
+Here, `size` represents the half-width (and half-height) of the box. By subtracting `size` from each component, we get a vector `d` where:
+- If `d.x` or `d.y` is positive, the point is outside the box along that axis
+- If `d.x` or `d.y` is negative, the point is inside the box along that axis
+- If `d.x` or `d.y` is zero, the point is exactly on the edge along that axis
+
+**Step 3: Handle the outside case**
+```wgsl
+length(max(d, vec2<f32>(0.0)))
+```
+When the point is outside the box, at least one component of `d` is positive. By clamping negative values to zero with `max(d, vec2<f32>(0.0))`, we get a vector pointing from the nearest corner of the box to the point. Taking the `length` of this vector gives us the Euclidean distance to the box.
+
+**Step 4: Handle the inside case**
+```wgsl
+min(max(d.x, d.y), 0.0)
+```
+When the point is inside the box, both `d.x` and `d.y` are negative. The `max(d.x, d.y)` selects the component that's closest to zero (least negative), which represents the distance to the nearest edge. The `min(..., 0.0)` ensures this value stays negative (or zero if on the edge).
+
+**Putting it together:**
+The final return statement combines both cases:
+- If outside: `length(max(d, vec2<f32>(0.0)))` gives a positive distance, and `min(max(d.x, d.y), 0.0)` is zero
+- If inside: `length(max(d, vec2<f32>(0.0)))` is zero (since all components were clamped), and `min(max(d.x, d.y), 0.0)` gives a negative distance
+
+This elegant formulation handles all cases in a single expression, giving us the signed distance to the box boundary.
+
+
+## Smooth Blending
+
 To combine shapes, you can use operations like:
 
 - **Union**: Take the minimum of the two distances
@@ -70,8 +111,6 @@ To combine shapes, you can use operations like:
 - **Subtraction**: Combine with negation
 
 These operations work on the distance values themselves, making it trivial to create complex scenes from simple primitives. For now, we're going to use a method to take the *smoothed* union.**
-
-## Smooth Blending
 
 In my opinion, one of the most interesting features of SDFs is the ability to smoothly blend shapes together, creating organic, fluid forms that would be difficult to achieve with traditional polygon-based approaches. Now we're sculpting with math (and a rendering pipeline, but we'll leave that for a different post).
 
