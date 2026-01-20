@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Monte Carlo: The importance of asking the right questions"
+title: "Importance Sampling: Why Where You Sample Matters More Than How Much"
 date: 2026-1-18 10:00:00 -0000
 tags: [rendering, mathematics, computer-graphics]
 author: "Jaiden Ortiz aka JellyBoonz"
