@@ -6,9 +6,6 @@ ruby ">= 3.1.7", "< 3.3"
 # GitHub Pages compatible setup
 gem "github-pages", group: :jekyll_plugins
 
-# Pin connection_pool to version compatible with Ruby 3.1.7
-gem "connection_pool", "~> 2.4"
-
 # Windows and JRuby does not include zoneinfo files, so bundle the tzinfo-data gem
 platforms :mingw, :x64_mingw, :mswin, :jruby do
   gem "tzinfo", ">= 1", "< 3"
