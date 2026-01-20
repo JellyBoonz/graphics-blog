@@ -28,8 +28,30 @@ A blog documenting my journey through graphics programming, rendering, and relat
       {% endif %}
     </div>
     
-    {% if post.excerpt %}
-      <p class="post-excerpt">{{ post.excerpt | strip_html | truncatewords: 50 }}</p>
+    {% if post.content %}
+      {% assign all_paragraphs = post.content | split: '<p>' %}
+      {% assign first_paragraph_content = '' %}
+      {% for paragraph in all_paragraphs %}
+        {% if paragraph contains '</p>' %}
+          {% assign para_text = paragraph | split: '</p>' | first | strip_html | strip %}
+          {% unless para_text == '' %}
+            {% unless para_text contains '<h1' or para_text contains '<h2' or para_text contains '<h3' or para_text contains '<h4' or para_text contains '<h5' or para_text contains '<h6' %}
+              {% if first_paragraph_content == '' %}
+                {% assign first_paragraph_content = para_text %}
+                {% break %}
+              {% endif %}
+            {% endunless %}
+          {% endunless %}
+        {% endif %}
+      {% endfor %}
+      {% if first_paragraph_content != '' %}
+        <p class="post-excerpt">{{ first_paragraph_content | truncatewords: 50 }}</p>
+      {% else %}
+        {% assign fallback = post.content | strip_html | strip | truncatewords: 50 %}
+        {% if fallback != '' %}
+          <p class="post-excerpt">{{ fallback }}</p>
+        {% endif %}
+      {% endif %}
     {% endif %}
   </article>
 {% endfor %}
