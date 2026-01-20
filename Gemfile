@@ -1,8 +1,5 @@
 source "https://rubygems.org"
 
-# Ruby version constraint for CI compatibility
-ruby ">= 3.1.7", "< 3.3"
-
 # GitHub Pages compatible setup
 gem "github-pages", group: :jekyll_plugins
 
