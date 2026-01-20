@@ -1,5 +1,8 @@
 source "https://rubygems.org"
 
+# Ruby version requirement (activesupport 8.x requires Ruby >= 3.2.0)
+ruby ">= 3.2.0"
+
 # GitHub Pages compatible setup
 gem "github-pages", group: :jekyll_plugins
 
