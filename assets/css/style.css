@@ -226,14 +226,63 @@ pre code {
   color: #E3E3E8;
 }
 
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+}
+
+th {
+  background-color: #22242C;
+  color: #B19CFF;
+  font-weight: 600;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border: 1px solid #2F313A;
+}
+
+td {
+  padding: 0.65rem 1rem;
+  border: 1px solid #2F313A;
+  color: #E3E3E8;
+  vertical-align: top;
+}
+
+tr:nth-child(even) td {
+  background-color: #1E2028;
+}
+
 /* Math equations */
 .MathJax {
   font-size: 1.1em !important;
 }
 
 /* Math display blocks */
-mjx-container[jax="SVG"] {
+mjx-container[jax="CHTML"][display="true"] {
+  display: block;
   margin: 1.5rem 0;
+  padding: 1.25rem 1.5rem;
+  background-color: #22242C;
+  border: 1px solid #2F313A;
+  border-left: 3px solid #8975F0;
+  border-radius: 6px;
+  overflow-x: auto;
+  text-align: center;
+}
+
+/* Keep the old SVG selector in case output format ever changes */
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  margin: 1.5rem 0;
+  padding: 1.25rem 1.5rem;
+  background-color: #22242C;
+  border: 1px solid #2F313A;
+  border-left: 3px solid #8975F0;
+  border-radius: 6px;
+  overflow-x: auto;
+  text-align: center;
 }
 
 /* Ensure proper rendering of absolute value and other symbols */
@@ -590,5 +639,159 @@ figure + h6 {
     background: #f5f5f5;
     border: 1px solid #ddd;
     color: black;
+  }
+}
+
+/* Interactive Demos */
+.interactive-demo {
+  margin: 3rem 0;
+  padding: 2rem;
+  background: linear-gradient(135deg, #1A1C22 0%, #2F313A 100%);
+  border-radius: 12px;
+  border: 1px solid rgba(177, 156, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.interactive-demo:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 48px rgba(177, 156, 255, 0.15);
+}
+
+.demo-canvas-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  width: 100%;
+  overflow: hidden;
+}
+
+.demo-canvas-container canvas {
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  touch-action: none; /* Prevent scrolling on touch */
+  cursor: crosshair;
+}
+
+.demo-controls {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.demo-controls label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #B19CFF;
+  font-size: 0.875rem;
+  min-width: 200px;
+}
+
+.demo-controls .control-value {
+  min-width: 30px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.demo-controls input[type="range"] {
+  flex: 1;
+  height: 4px;
+  background: #2F313A;
+  border-radius: 2px;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.demo-controls input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #B19CFF;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.demo-controls input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  background: #8975F0;
+}
+
+.demo-controls input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #B19CFF;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.demo-controls input[type="range"]::-moz-range-thumb:hover {
+  transform: scale(1.2);
+  background: #8975F0;
+}
+
+.demo-controls button {
+  padding: 0.5rem 1rem;
+  background: rgba(177, 156, 255, 0.1);
+  border: 1px solid rgba(177, 156, 255, 0.3);
+  border-radius: 6px;
+  color: #B19CFF;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.demo-controls button:hover {
+  background: rgba(177, 156, 255, 0.2);
+  border-color: rgba(177, 156, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.demo-controls button:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .interactive-demo {
+    margin: 2rem -15px;
+    padding: 1.5rem;
+    border-radius: 8px;
+  }
+  
+  .demo-canvas-container {
+    margin-bottom: 1rem;
+  }
+  
+  .demo-canvas-container canvas {
+    width: 100% !important;
+    height: auto !important;
+  }
+  
+  .demo-controls {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+  
+  .demo-controls label {
+    min-width: auto;
+    width: 100%;
+  }
+  
+  .demo-controls button {
+    width: 100%;
   }
 }

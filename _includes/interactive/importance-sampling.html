@@ -1,0 +1,434 @@
+<div class="interactive-demo" id="importance-sampling-{{ include.id | default: 'default' }}">
+    <div class="demo-canvas-container"></div>
+    <div class="demo-controls">
+        <label style="display: none;">
+            <span>Number of Samples:</span>
+            <input type="range" id="sample-count-{{ include.id | default: 'default' }}" min="4" max="32" value="4"
+                step="2" disabled>
+            <span class="control-value" id="sample-count-value-{{ include.id | default: 'default' }}">4</span>
+        </label>
+        <button id="reset-{{ include.id | default: 'default' }}">Reset to Uniform</button>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+<script>
+    (function () {
+        const demoId = '{{ include.id | default: "default" }}';
+        const containerId = 'importance-sampling-' + demoId;
+        const container = document.getElementById(containerId);
+        if (!container) return;
+
+        const canvasContainer = container.querySelector('.demo-canvas-container');
+        let importanceSamplingSketch = null;
+
+        let sketch = function (p) {
+            // Configuration
+            let ballRadius = 80;
+            let ballCenter;
+            let samples = [];
+            let numSamples = 4;
+            let draggedArrow = null;
+            let hoveredArrow = null;
+            let lightAngle = 5 * p.PI / 4; // Light direction (top left, 225 degrees)
+
+            // Noise visualization
+            let noisePattern = [];
+            let noiseResolution = 100;
+            let overallQuality = 0.5; // 0 = poor (noisy), 1 = perfect (clear)
+            let staticNoisePoints = []; // Pre-generated static noise
+
+            p.setup = function () {
+                const width = Math.min(800, canvasContainer.offsetWidth || 800);
+                const height = width * 0.75;
+
+                let canvas = p.createCanvas(width, height);
+                canvas.parent(canvasContainer);
+
+                ballCenter = p.createVector(p.width / 2, p.height / 2);
+
+                // Initialize sample directions (uniform distribution)
+                initializeSamples();
+
+                // Generate static noise pattern
+                generateStaticNoise();
+            };
+
+            function initializeSamples() {
+                samples = [];
+                for (let i = 0; i < numSamples; i++) {
+                    let angle = (p.TWO_PI / numSamples) * i;
+                    let distance = 150;
+                    let x = ballCenter.x + p.cos(angle) * distance;
+                    let y = ballCenter.y + p.sin(angle) * distance;
+
+                    samples.push({
+                        angle: angle,
+                        target: p.createVector(x, y),
+                        contribution: 1.0 / numSamples, // Uniform weighting
+                        color: p.color(200, 110, 130, 180) // Light burgundy
+                    });
+                }
+                updateContributions();
+            }
+
+            p.draw = function () {
+                p.background(26, 28, 34); // Your dark background
+
+                // Calculate overall quality based on sample alignment
+                calculateOverallQuality();
+
+                // Draw noise around the ball (outside)
+                drawNoiseAroundBall();
+
+                // Draw solid ball
+                drawSolidBall();
+
+                // Draw ball outline
+                p.stroke(200, 110, 130, 100);
+                p.strokeWeight(2);
+                p.noFill();
+                p.circle(ballCenter.x, ballCenter.y, ballRadius * 2);
+
+                // Draw light source indicator
+                drawLightSource();
+
+                // Draw sample arrows
+                samples.forEach((sample, i) => {
+                    drawArrow(sample, i);
+                });
+            };
+
+            function calculateOverallQuality() {
+                // Calculate how well samples align with light sources
+                // Quality increases as more samples point toward light
+                let totalAlignment = 0;
+                let maxAlignment = 0;
+
+                samples.forEach(sample => {
+                    let angleDiff = p.abs(p5.Vector.angleBetween(
+                        p.createVector(p.cos(lightAngle), p.sin(lightAngle)),
+                        p.createVector(p.cos(sample.angle), p.sin(sample.angle))
+                    ));
+
+                    // Alignment: 1 when pointing at light, 0 when perpendicular
+                    let alignment = p.cos(angleDiff);
+                    alignment = p.map(alignment, -1, 1, 0, 1);
+
+                    // Weight by contribution
+                    totalAlignment += alignment * sample.contribution;
+                    maxAlignment += sample.contribution;
+                });
+
+                // Normalize to 0-1 range
+                overallQuality = maxAlignment > 0 ? totalAlignment / maxAlignment : 0.5;
+            }
+
+            function generateStaticNoise() {
+                // Pre-generate static noise points for the ball
+                staticNoisePoints = [];
+                let noiseCount = 800; // More prominent noise - increased count
+
+                for (let i = 0; i < noiseCount; i++) {
+                    // Random position within the ball circle
+                    let angle = p.random(p.TWO_PI);
+                    let distance = p.random(0, ballRadius);
+
+                    let x = p.cos(angle) * distance;
+                    let y = p.sin(angle) * distance;
+
+                    // Check if within circle
+                    if (p.sqrt(x * x + y * y) <= ballRadius) {
+                        // Pre-calculate noise offsets (more prominent)
+                        let noiseRange = 120; // Stronger noise - increased range
+                        let noiseR = p.random(-noiseRange, noiseRange);
+                        let noiseG = p.random(-noiseRange, noiseRange);
+                        let noiseB = p.random(-noiseRange, noiseRange);
+
+                        staticNoisePoints.push({
+                            x: x,
+                            y: y,
+                            noiseR: noiseR,
+                            noiseG: noiseG,
+                            noiseB: noiseB,
+                            alpha: p.random(240, 255) // Higher base alpha for more visibility
+                        });
+                    }
+                }
+            }
+
+            function drawSolidBall() {
+                // Draw a ball with static noise texture
+                // Noise visibility decreases as quality increases
+                p.push();
+
+                // Base color (light burgundy)
+                let baseR = 200;
+                let baseG = 110;
+                let baseB = 130;
+
+                // Draw base ball first
+                p.fill(baseR, baseG, baseB);
+                p.noStroke();
+                p.circle(ballCenter.x, ballCenter.y, ballRadius * 2);
+
+                // Overlay static noise texture on top
+                // Noise visibility scales with quality (less visible when quality is high)
+                let noiseVisibility = p.map(overallQuality, 0, 1, 1.0, 0.2);
+
+                p.strokeWeight(3); // Thicker strokes for more prominent noise
+
+                // Draw all static noise points, but scale visibility based on quality
+                staticNoisePoints.forEach(point => {
+                    let x = ballCenter.x + point.x;
+                    let y = ballCenter.y + point.y;
+
+                    let r = p.constrain(baseR + point.noiseR * noiseVisibility, 0, 255);
+                    let g = p.constrain(baseG + point.noiseG * noiseVisibility, 0, 255);
+                    let b = p.constrain(baseB + point.noiseB * noiseVisibility, 0, 255);
+                    let alpha = point.alpha * noiseVisibility;
+
+                    p.stroke(r, g, b, alpha);
+                    p.point(x, y);
+                });
+
+                p.pop();
+            }
+
+            function drawNoiseAroundBall() {
+                // Draw noise particles around the ball (outside)
+                // Noise decreases as quality increases
+                p.push();
+
+                let noiseAmount = p.map(overallQuality, 0, 1, 200, 20); // More noise when quality is low
+                let noiseRadius = ballRadius + 20; // Start noise just outside the ball
+                let noiseSpread = 100; // How far out the noise extends
+
+                p.strokeWeight(1);
+
+                for (let i = 0; i < noiseAmount; i++) {
+                    // Random angle and distance from ball
+                    let angle = p.random(p.TWO_PI);
+                    let distance = p.random(noiseRadius, noiseRadius + noiseSpread);
+
+                    let x = ballCenter.x + p.cos(angle) * distance;
+                    let y = ballCenter.y + p.sin(angle) * distance;
+
+                    // Noise intensity decreases with quality
+                    let noiseIntensity = p.map(overallQuality, 0, 1, 1.0, 0.3);
+                    let alpha = p.random(50, 150) * noiseIntensity;
+
+                    // Random color (slightly purple tinted)
+                    let r = p.random(100, 200);
+                    let g = p.random(100, 180);
+                    let b = p.random(200, 255);
+
+                    p.stroke(r, g, b, alpha);
+                    p.point(x, y);
+                }
+
+                p.pop();
+            }
+
+
+            function drawArrow(sample, index) {
+                let direction = p5.Vector.sub(sample.target, ballCenter);
+                let distance = direction.mag();
+                let dirCopy = direction.copy();
+                dirCopy.normalize();
+
+                // Arrow color based on contribution
+                let arrowColor = sample.color;
+                if (hoveredArrow === index) {
+                    arrowColor = p.color(255, 200, 100); // Highlight
+                } else if (sample.contribution > 0.15) {
+                    // High contribution = brighter
+                    arrowColor = p.color(200, 110, 130, 220);
+                }
+
+                // Draw line from ball to target
+                p.stroke(arrowColor);
+                p.strokeWeight(2);
+                p.line(
+                    ballCenter.x + dirCopy.x * ballRadius,
+                    ballCenter.y + dirCopy.y * ballRadius,
+                    sample.target.x,
+                    sample.target.y
+                );
+
+                // Draw arrowhead
+                let arrowSize = 8;
+                let angle = dirCopy.heading();
+                p.push();
+                p.translate(sample.target.x, sample.target.y);
+                p.rotate(angle);
+                p.fill(arrowColor);
+                p.noStroke();
+                p.triangle(0, 0, -arrowSize, -arrowSize / 2, -arrowSize, arrowSize / 2);
+                p.pop();
+
+                // Draw draggable handle
+                p.fill(arrowColor);
+                p.noStroke();
+                p.circle(sample.target.x, sample.target.y, 12);
+
+                // Update sample angle
+                sample.angle = dirCopy.heading();
+            }
+
+            function drawLightSource() {
+                // Show where the "light" is coming from
+                let lightDist = 200;
+                let lightX = ballCenter.x + p.cos(lightAngle) * lightDist;
+                let lightY = ballCenter.y + p.sin(lightAngle) * lightDist;
+
+                // Draw light direction indicator
+                p.stroke(255, 200, 100, 150);
+                p.strokeWeight(1);
+                p.line(ballCenter.x, ballCenter.y, lightX, lightY);
+
+                // Draw light source
+                p.fill(255, 200, 100, 150);
+                p.noStroke();
+                p.circle(lightX, lightY, 20);
+
+                // Label
+                p.fill(255, 200, 100);
+                p.textAlign(p.CENTER, p.CENTER);
+                p.textSize(12);
+                p.text('Light', lightX, lightY - 25);
+            }
+
+            // Mouse/Touch interaction
+            p.mousePressed = function () {
+                let mousePos = p.createVector(p.mouseX, p.mouseY);
+
+                // Check if clicking on an arrow handle
+                samples.forEach((sample, i) => {
+                    let dist = p5.Vector.dist(mousePos, sample.target);
+                    if (dist < 15) {
+                        draggedArrow = i;
+                        return false;
+                    }
+                });
+            };
+
+            p.mouseDragged = function () {
+                if (draggedArrow !== null) {
+                    let mousePos = p.createVector(p.mouseX, p.mouseY);
+                    let minDist = ballRadius + 30;
+                    let maxDist = p.min(p.width, p.height) * 0.4;
+
+                    // Constrain to reasonable distance
+                    let direction = p5.Vector.sub(mousePos, ballCenter);
+                    let distance = p.constrain(direction.mag(), minDist, maxDist);
+                    direction.normalize();
+
+                    samples[draggedArrow].target = p5.Vector.add(
+                        ballCenter,
+                        p5.Vector.mult(direction, distance)
+                    );
+
+                    // Update contribution based on importance
+                    updateContributions();
+                }
+            };
+
+            p.mouseReleased = function () {
+                draggedArrow = null;
+            };
+
+            p.mouseMoved = function () {
+                hoveredArrow = null;
+                let mousePos = p.createVector(p.mouseX, p.mouseY);
+
+                samples.forEach((sample, i) => {
+                    let dist = p5.Vector.dist(mousePos, sample.target);
+                    if (dist < 15) {
+                        hoveredArrow = i;
+                    }
+                });
+            };
+
+            function updateContributions() {
+                // Calculate importance: samples closer to light source get higher weight
+                samples.forEach(sample => {
+                    let angleDiff = p.abs(p5.Vector.angleBetween(
+                        p.createVector(p.cos(lightAngle), p.sin(lightAngle)),
+                        p.createVector(p.cos(sample.angle), p.sin(sample.angle))
+                    ));
+
+                    // Importance: closer to light = higher contribution
+                    // Use cosine for smoother falloff
+                    let importance = p.cos(angleDiff);
+                    importance = p.map(importance, -1, 1, 0.1, 1.0);
+                    sample.contribution = importance;
+                });
+
+                // Normalize contributions
+                let total = samples.reduce((sum, s) => sum + s.contribution, 0);
+                if (total > 0) {
+                    samples.forEach(sample => {
+                        sample.contribution /= total;
+                    });
+                }
+            }
+
+            // Handle window resize
+            p.windowResized = function () {
+                const width = Math.min(800, canvasContainer.offsetWidth || 800);
+                const height = width * 0.75;
+                p.resizeCanvas(width, height);
+                ballCenter = p.createVector(p.width / 2, p.height / 2);
+
+                // Adjust sample positions to maintain relative positions
+                samples.forEach(sample => {
+                    let direction = p5.Vector.sub(sample.target, ballCenter);
+                    let distance = direction.mag();
+                    direction.normalize();
+                    sample.target = p5.Vector.add(ballCenter, p5.Vector.mult(direction, distance));
+                });
+            };
+
+            // Expose methods for external control
+            p.setSampleCount = function (count) {
+                numSamples = count;
+                initializeSamples();
+                generateStaticNoise(); // Regenerate noise for new ball size if needed
+            };
+
+            p.resetToUniform = function () {
+                initializeSamples();
+            };
+
+            // Store reference
+            importanceSamplingSketch = p;
+        };
+
+        // Initialize p5 sketch
+        new p5(sketch);
+
+        // Connect controls after a short delay to ensure DOM is ready
+        setTimeout(function () {
+            const sampleCountSlider = document.getElementById('sample-count-' + demoId);
+            const sampleCountValue = document.getElementById('sample-count-value-' + demoId);
+            const resetButton = document.getElementById('reset-' + demoId);
+
+            if (sampleCountSlider && importanceSamplingSketch) {
+                sampleCountSlider.addEventListener('input', function (e) {
+                    const count = parseInt(e.target.value);
+                    if (sampleCountValue) {
+                        sampleCountValue.textContent = count;
+                    }
+                    importanceSamplingSketch.setSampleCount(count);
+                });
+            }
+
+            if (resetButton && importanceSamplingSketch) {
+                resetButton.addEventListener('click', function () {
+                    importanceSamplingSketch.resetToUniform();
+                });
+            }
+        }, 100);
+    })();
+</script>
